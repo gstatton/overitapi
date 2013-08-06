@@ -114,6 +114,13 @@ app.get(baseurl + 'recomend', function (req, res){
 	
 })
 
+app.get(baseurl + 'shortcode', function (req, res){
+  url = req.query.url;
+  db.shortcode.find({url: url}, function(err, data){
+    res.json(data);
+  })
+})
+
 //PUTS
 app.put(baseurl + 'overit', function (req, res){
 	//post a new OverIt
