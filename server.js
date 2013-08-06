@@ -72,7 +72,7 @@ app.get('/twitter/', function(req, res){
 })
 
 app.get('/', function(req, res){
-	res.redirect("http://greg3.apiary.io");
+	res.redirect("http://docs.greg3.apiary.io/");
 })
 
 //GET methods
