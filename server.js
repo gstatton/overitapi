@@ -116,7 +116,7 @@ app.get(baseurl + 'recomend', function (req, res){
 
 app.get(baseurl + 'shortcode', function (req, res){
   url = req.query.url;
-  db.shortcode.find({url: url}, function(err, data){
+  db.links.find({url: url}, function(err, data){
     res.json(data);
   })
 })
