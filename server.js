@@ -71,6 +71,10 @@ app.get('/twitter/', function(req, res){
 	
 })
 
+app.get('/', function(req, res){
+	res.redirect("http://greg3.apiary.io");
+})
+
 //GET methods
 app.get(baseurl + 'publictimeline', function (req, res){
 	//return a list of the public timeline of overits
