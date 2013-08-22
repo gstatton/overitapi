@@ -124,17 +124,33 @@ app.get(baseurl + 'shortcode', function (req, res){
 
 //GET Nested Dictonary for Pearson Correlation
 app.get(baseurl + 'pearson', function (req, res){
-	results = "results";
-	var pearsondict = [results];
+	var pearsondict = [];
 	var newentry = {};
 	db.links.find({}, function(err, data){
 		returnlen = data.length
 		for (var i = 0; i < returnlen; i++){
-			data = lookuper(data[i].url);
-			pearsondict.push(data);
-			console.log(pearsondict);
+			//data = lookuper(data[i].url);
+	//console.log(data[i].url);
+			newurl = data[i].url;
+			obj1 = [];
+			obj2 = [];
+			db.overits.aggregate( [ { $match: {url: newurl} }, 
+							{ $group: { _id: "$user", total: { $sum: 1 }, url: { $addToSet: "$url"}, user: { $addToSet: "$user" }  } }, 
+							{ $sort: { total: -1 } } ], function (err, results){
+				console.log(results.length);
+				for (var i = results.length - 1; i >= 0; i--) {
+					console.log(results[i].length);
+					//console.log("url: " + results[i].url + " user: " + results[i].user + " total: " + results[i].total);
+				    //Build JSON object that looks like {"http://www.google.com": {"gstatton": 3, "mrkai": 5, "jameschho": 1}}
+				};
+				res.json(results);
+		});			
+
+
+			//pearsondict.push(data);
+			//console.log(pearsondict);
 		};
-	res.json(JSON.stringify(pearsondict));
+	res.json(JSON.stringify(results));
 	});
 	//console.log("3" + JSON.stringify(pearsondict));
 
